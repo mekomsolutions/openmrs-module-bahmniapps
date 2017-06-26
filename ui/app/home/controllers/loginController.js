@@ -132,24 +132,26 @@ angular.module('bahmni.home')
 
                 sessionService.loginUser($scope.loginInfo.username, $scope.loginInfo.password, $scope.loginInfo.currentLocation, $scope.loginInfo.otp).then(
                     function (data) {
-                        ensureNoSessionIdInRoot();
-                        if (data && data.firstFactAuthorization) {
-                            $scope.showOTP = true;
-                            deferrable.resolve(data);
-                            return;
-                        }
-                        sessionService.loadCredentials().then(function () {
-                            onSuccessfulAuthentication();
-                            $rootScope.currentUser.addDefaultLocale($scope.selectedLocale);
-                            userService.savePreferences().then(
-                                function () { deferrable.resolve(); },
-                                function (error) { deferrable.reject(error); }
+                        localeService.setLocale($scope.selectedLocale).finally(function () {
+                            ensureNoSessionIdInRoot();
+                            if (data && data.firstFactAuthorization) {
+                                $scope.showOTP = true;
+                                deferrable.resolve(data);
+                                return;
+                            }
+                            sessionService.loadCredentials().then(function () {
+                                onSuccessfulAuthentication();
+                                $rootScope.currentUser.addDefaultLocale($scope.selectedLocale);
+                                userService.savePreferences().then(
+                                    function () { deferrable.resolve(); },
+                                    function (error) { deferrable.reject(error); }
+                                );
+                            }, function (error) {
+                                $scope.errorMessageTranslateKey = error;
+                                deferrable.reject(error);
+                            }
                             );
-                        }, function (error) {
-                            $scope.errorMessageTranslateKey = error;
-                            deferrable.reject(error);
-                        }
-                        );
+                        });
                     },
                     function (error) {
                         $scope.errorMessageTranslateKey = error;
