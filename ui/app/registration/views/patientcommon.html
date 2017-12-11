@@ -9,9 +9,7 @@
                     <input type="text" id="givenNameLocal" ng-model="patient.givenNameLocal" pattern-validate
                            placeholder="{{::patientConfiguration.local()['placeholderForGivenName'] | translate}}" focus-me="true">
                     <input ng-show="::showMiddleName" type="text" id="middleNameLocal"
-                           ng-model="patient.middleNameLocal"
-                           pattern-validate
-                           placeholder="{{::patientConfiguration.local()['placeholderForMiddleName'] | translate}}">
+                           ng-model="patient.middleNameLocal" pattern-validate placeholder="{{::patientConfiguration.local()['placeholderForMiddleName'] | translate}}">
                     <input type="text" id="familyNameLocal" ng-model="patient.familyNameLocal" pattern-validate
                            placeholder="{{::patientConfiguration.local()['placeholderForFamilyName'] | translate}}">
                 </div>
