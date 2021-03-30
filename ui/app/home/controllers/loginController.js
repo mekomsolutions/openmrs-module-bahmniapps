@@ -113,19 +113,8 @@ angular.module('bahmni.home')
                     path: '/',
                     expires: 1
                 });
-                // if ($scope.loginInfo && $scope.loginInfo.currentLocation) {
-                //     locationService.setSessionLocation({ sessionLocation: $scope.loginInfo.currentLocation.uuid }).then(function (response) {
-                //         // $rootScope.$broadcast('event:auth-loggedin');
-                //         // $scope.loginInfo.currentLocation = getLastLoggedinLocation();
-                //         return response;
-                //     }).then(function (response) {
-                //         return locationService.setSessionLocation({ sessionLocation: $scope.loginInfo.currentLocation.uuid });
-                //     }).then(function (response) {
-                //         $rootScope.$broadcast('event:auth-loggedin');
-                //         $scope.loginInfo.currentLocation = getLastLoggedinLocation();
-                //         return response;
-                //     });
-                // }
+                $rootScope.$broadcast('event:auth-loggedin');
+                $scope.loginInfo.currentLocation = getLastLoggedinLocation();
             };
 
             $scope.login = function () {
